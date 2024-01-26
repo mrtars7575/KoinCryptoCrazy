@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.koincryptocrazy.R
@@ -14,9 +16,10 @@ import com.example.koincryptocrazy.databinding.FragmentListBinding
 import com.example.koincryptocrazy.model.CryptoList
 import com.example.koincryptocrazy.model.CryptoListItem
 import com.example.koincryptocrazy.viewmodel.CryptoViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
-class ListFragment : Fragment() , RecyclerViewAdapter.Listener {
+@AndroidEntryPoint
+class ListFragment  : Fragment() , RecyclerViewAdapter.Listener {
 
 
     private var _binding: FragmentListBinding? = null
@@ -25,7 +28,7 @@ class ListFragment : Fragment() , RecyclerViewAdapter.Listener {
 
     var cryptoAdapter = RecyclerViewAdapter(CryptoList(),this)
 
-    private val viewModel : CryptoViewModel by viewModel()
+    lateinit var viewModel: CryptoViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +48,9 @@ class ListFragment : Fragment() , RecyclerViewAdapter.Listener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(requireActivity())
+            .get(CryptoViewModel::class.java)
 
         val layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.layoutManager = layoutManager

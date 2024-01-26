@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.koincryptocrazy.model.CryptoList
 import com.example.koincryptocrazy.repository.CryptoDownload
 import com.example.koincryptocrazy.util.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,9 +16,11 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.Dispatcher
+import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 
-class CryptoViewModel(
+@HiltViewModel
+class CryptoViewModel @Inject constructor(
     val cryptoDownloadRepository : CryptoDownload
 ) : ViewModel() {
 
